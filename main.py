@@ -125,8 +125,7 @@ def addX(row, column):
       messenger.goto(-50, 107)
       messenger.color("green")
       messenger.write("You Win!", font = ("Arial", 15))
-      screen.update()
-      deactivate()   
+      screen.update()  
     else:
       time.sleep(1)
       addO()
@@ -135,13 +134,11 @@ def addX(row, column):
         messenger.color("red")
         messenger.write("You Lost!", font = ("Arial", 15))
         screen.update()
-        deactivate()
       elif checkDraw():
         messenger.goto(-40, 107)
         messenger.color("cyan")
         messenger.write("It's a tie!", font = ("Arial", 15))
         screen.update()
-        deactivate()
 
 
 # adds an O to the 2D list (computer plays O)
@@ -206,19 +203,7 @@ def checkWinner(letter):
       return True
   return False
 
-# activates all the event listeners
-def activate(functions):
-  for i in range(9):
-    screen.onkey(functions[i], str(i + 1))
-
-
-# deactivates all the event listeners
-def deactivate():
-  for i in range(9):
-    screen.onkey(None, str(i + 1))
-
-
-# functions for event listeners
+# functions for calling each square
 def squareOne():
   addX(0, 0)
 def squareTwo():
@@ -238,7 +223,7 @@ def squareEight():
 def squareNine():
   addX(2, 2)
 
-# list of event listener functions
+# list of functions
 functions = [squareOne, squareTwo, squareThree, squareFour, squareFive, squareSix, squareSeven, squareEight, squareNine]
 
 # draws the tic tac toe board
@@ -252,6 +237,9 @@ for i in range(3):
         row.append(" ")
     board.append(row)
 
-# allows user to type a number to place their Xs
-activate(functions)
-screen.listen()
+while not checkDraw() and not checkWinner("O") and not checkWinner("X"):
+  value = int(input("Which square do you want to place your X in? "))
+  functions[value-1]()
+
+# shows end screen for ten seconds before closing program
+time.sleep(10)
