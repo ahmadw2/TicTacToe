@@ -5,109 +5,70 @@ import time
 screen = turtle.Screen()
 screen.tracer(0)
 screen.title("Tic Tac Toe")
-screen.bgcolor("black")
+screen.bgcolor("CadetBlue1")
 
 # turtle draws the board, Xs and Os
 turtle.hideturtle()
-turtle.pencolor("white")
-turtle.pensize(4)
+turtle.pencolor("CadetBlue3")
+turtle.pensize(9)
 
 # messenger relays messages to user they win or lose
 messenger = turtle.Turtle()
 messenger.hideturtle()
 messenger.penup()
-messenger.goto(-90, 107)
-messenger.color("red")
+messenger.goto(0, 170)
+messenger.color("CadetBlue4")
 
 
 # creates the Tic Tac Toe board
 def draw_board():
-    # vertical lines
-    turtle.penup()
-    turtle.goto(-100, 100)
-    turtle.pendown()
-    turtle.goto(-100, -100)
 
     turtle.penup()
-    turtle.goto(-33.3, 100)
+    turtle.goto(-50, 150)
     turtle.pendown()
-    turtle.goto(-33.3, -100)
+    turtle.goto(-50, -150)
 
     turtle.penup()
-    turtle.goto(33, 100)
+    turtle.goto(50, 150)
     turtle.pendown()
-    turtle.goto(33, -100)
+    turtle.goto(50, -150)
 
     turtle.penup()
-    turtle.goto(100, 100)
+    turtle.goto(-150, 50)
     turtle.pendown()
-    turtle.goto(100, -100)
-
-    # horizontal lines
-    turtle.penup()
-    turtle.goto(-100, 100)
-    turtle.pendown()
-    turtle.goto(100, 100)
+    turtle.goto(150, 50)
 
     turtle.penup()
-    turtle.goto(-100, 33.3)
+    turtle.goto(-150, -50)
     turtle.pendown()
-    turtle.goto(100, 33.3)
+    turtle.goto(150, -50)
 
-    turtle.penup()
-    turtle.goto(-100, -33.3)
-    turtle.pendown()
-    turtle.goto(100, -33.3)
-
-    turtle.penup()
-    turtle.goto(-100, -100)
-    turtle.pendown()
-    turtle.goto(100, -100)
-
-    num = 1
-    for i in range(3):
-        for j in range(3):
-            turtle.penup()
-            turtle.goto(-92 + j * 66, 83 - i * 66)
-            turtle.write(num, font=('Arial', 7))
-            num += 1
+    screen.update()
 
 
 # draws an X in the designated square
 def drawX(x, y):
     turtle.penup()
     turtle.goto(x, y)
-    turtle.pensize(2)
+    turtle.pencolor("azure4")
     turtle.pendown()
     turtle.seth(45)
 
     for i in range(2):
-        turtle.forward(20)
-        turtle.backward(40)
-        turtle.forward(20)
+        turtle.forward(40)
+        turtle.backward(80)
+        turtle.forward(40)
         turtle.left(90)
 
     screen.update()
 
-# checks if there's a tie
-def checkDraw():
-  count = 0
-  for i in range(3):
-    for j in range(3):
-      if board[i][j] == "X":
-        count += 1
-
-  if count > 3:
-    return True
-  else:
-    return False
-
 # draws an O in the designated square
 def drawO(x, y):
   turtle.penup()
-  turtle.goto(x-15, y+15)
+  turtle.goto(x-20, y+20)
+  turtle.pencolor("azure1")
   turtle.pendown()
-  turtle.circle(20)
+  turtle.circle(30)
   screen.update()
 
 
@@ -115,29 +76,23 @@ def drawO(x, y):
 def addX(row, column):
   messenger.clear()
   if board[row][column] == "X" or board[row][column] == "O":
-    messenger.write("That square is already filled!", font=("Arial", 10))
+    messenger.write("That square is already filled!", align="center", font=("Arial", 14, "bold"))
     screen.update()
   else:
-    drawX(-66 + 66 * column, 66 - 66 * row)
+    drawX(-100 + 100 * column, 100 - 100 * row)
     board[row][column] = "X"
 
     if checkWinner("X"):
-      messenger.goto(-50, 107)
-      messenger.color("green")
-      messenger.write("You Win!", font = ("Arial", 15))
-      screen.update()  
+      messenger.write("You Win!", align="center", font = ("Arial", 15, "bold"))
+      screen.update()
     else:
       time.sleep(1)
       addO()
       if checkWinner("O"):
-        messenger.goto(-50, 107)
-        messenger.color("red")
-        messenger.write("You Lost!", font = ("Arial", 15))
+        messenger.write("You Lose!", align="center", font = ("Arial", 15, "bold"))
         screen.update()
       elif checkDraw():
-        messenger.goto(-40, 107)
-        messenger.color("cyan")
-        messenger.write("It's a tie!", font = ("Arial", 15))
+        messenger.write("It's a tie!", align="center",font = ("Arial", 15, "bold"))
         screen.update()
 
 
@@ -149,7 +104,7 @@ def addO():
       if board[i][j] == " ":
         board[i][j] = "O"
         if checkWinner("O"):
-          drawO(-66 + 66 * j, 66 - 66 * i)
+          drawO(-100 + 100 * j, 100 - 100 * i)
           return
         board[i][j] = " "
 
@@ -160,7 +115,7 @@ def addO():
         board[i][j] = "X"
         if checkWinner("X"):
           board[i][j] = "O"
-          drawO(-66 + 66 * j, 66 - 66 * i)
+          drawO(-100 + 100 * j, 100 - 100 * i)
           return
         board[i][j] = " "
 
@@ -169,7 +124,7 @@ def addO():
     for j in range(0, 3, 2):
       if board[i][j] == " ":
         board[i][j] = "O"
-        drawO(-66 + 66 * j, 66 - 66 * i)
+        drawO(-100 + 100 * j, 100 - 100 * i)
         return
 
   # In case the other three don't place O
@@ -177,7 +132,7 @@ def addO():
     for j in range(3):
       if board[i][j] == " ":
         board[i][j] = "O"
-        drawO(-66 + 66 * j, 66 - 66 * i)
+        drawO(-100 + 100 * j, 100 - 100 * i)
         return
       
 
@@ -203,7 +158,22 @@ def checkWinner(letter):
       return True
   return False
 
-# functions for calling each square
+
+# checks if there's a tie
+def checkDraw():
+  count = 0
+  for i in range(3):
+    for j in range(3):
+      if board[i][j] == "X":
+        count += 1
+
+  if count > 3:
+    return True
+  else:
+    return False
+
+
+# functions for each square
 def squareOne():
   addX(0, 0)
 def squareTwo():
@@ -223,9 +193,40 @@ def squareEight():
 def squareNine():
   addX(2, 2)
 
-# list of functions
-functions = [squareOne, squareTwo, squareThree, squareFour, squareFive, squareSix, squareSeven, squareEight, squareNine]
+# has the square coordinates to track user's clicks
+def button_click(x, y):
+  if -150 <= x <= -50:
+    if 50 < y <= 150:
+      squareOne()
+      return
+    if -50 <= y <= 50:
+      squareFour()
+      return
+    if -150 <= y < -50:
+      squareSeven()
+      return
+  if -50 < x <= 50:
+    if 50 < y <= 150:
+      squareTwo()
+      return
+    if -50 <= y <= 50:
+      squareFive() 
+      return
+    if -150 <= y < -50:
+      squareEight() 
+      return
+  if 50 < x <= 150:
+    if 50 < y <= 150:
+      squareThree()
+      return
+    if -50 <= y <= 50:
+      squareSix() 
+      return
+    if -150 <= y < -50:
+      squareNine() 
+      return
 
+    
 # draws the tic tac toe board
 draw_board()
 
@@ -237,9 +238,8 @@ for i in range(3):
         row.append(" ")
     board.append(row)
 
-while not checkDraw() and not checkWinner("O") and not checkWinner("X"):
-  value = int(input("Which square do you want to place your X in? "))
-  functions[value-1]()
+# allows user to click on screen to place their Xs
+screen.onclick(button_click)
 
-# shows end screen for ten seconds before closing program
-time.sleep(10)
+# waits for user to close the screen
+turtle.done()
